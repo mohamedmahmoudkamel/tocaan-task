@@ -18,6 +18,7 @@ return (new Config())
             'sort_algorithm' => 'length'
         ],
         'single_blank_line_at_eof' => true, // Adds a single blank line at the end of each file
+        'no_trailing_whitespace' => true,
         'class_attributes_separation' => [
             'elements' => [
                 'const' => 'one',

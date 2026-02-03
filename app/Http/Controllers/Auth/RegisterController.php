@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
+use Exception;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
@@ -20,18 +22,33 @@ class RegisterController extends Controller
      */
     public function __invoke(RegisterRequest $request): JsonResponse
     {
-        $user = User::create([
-            'name' => $request->validated('name'),
-            'email' => $request->validated('email'),
-            'password' => Hash::make($request->validated('password')),
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $token = JWTAuth::fromUser($user);
+            $user = User::create([
+                'name' => $request->validated('name'),
+                'email' => $request->validated('email'),
+                'password' => Hash::make($request->validated('password')),
+            ]);
 
-        return response()->json([
-            'user' => new UserResource($user),
-            'token' => $token,
-            'token_type' => 'Bearer',
-        ], Response::HTTP_CREATED);
+            $token = JWTAuth::fromUser($user);
+
+            DB::commit();
+
+            return response()->json([
+                'user' => new UserResource($user),
+                'token' => $token,
+                'token_type' => 'Bearer',
+                'message' => __('auth.registration.success'),
+            ], Response::HTTP_CREATED);
+
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'error' => __('auth.registration.failed'),
+                'message' => $e->getMessage(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 }

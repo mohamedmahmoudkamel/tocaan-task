@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\{LoginController, RegisterController};
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +15,4 @@ use App\Http\Controllers\Auth\RegisterController;
 */
 
 Route::post('/auth/register', RegisterController::class)->name('auth.register');
+Route::post('/auth/login', LoginController::class)->name('auth.login');
