@@ -10,7 +10,8 @@ use Illuminate\Foundation\Testing\{RefreshDatabase, WithFaker};
 
 class RegisterTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function test_user_can_register_successfully(): void
     {

@@ -11,7 +11,8 @@ use Illuminate\Foundation\Testing\{RefreshDatabase, WithFaker};
 
 class OrderTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
     private User $user;
 
@@ -44,7 +45,7 @@ class OrderTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $this->token,
         ])->postJson('/api/orders', $orderData);
-        
+
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
                 'order_id',
