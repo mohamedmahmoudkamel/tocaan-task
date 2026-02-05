@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\Auth\{LoginController, RegisterController};
 
 /*
@@ -16,3 +17,7 @@ use App\Http\Controllers\Auth\{LoginController, RegisterController};
 
 Route::post('/auth/register', RegisterController::class)->name('auth.register');
 Route::post('/auth/login', LoginController::class)->name('auth.login');
+
+Route::middleware(['jwt.auth', 'throttle:60,1'])->group(function () {
+    Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
+});
