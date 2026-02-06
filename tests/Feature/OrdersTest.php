@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Testing\{RefreshDatabase, WithFaker};
 
-class OrderTest extends TestCase
+class OrdersTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;

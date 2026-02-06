@@ -5,8 +5,8 @@ return [
     'failed' => 'Order creation failed',
     'status' => [
         'pending' => 'Pending',
+        'confirmed' => 'Confirmed',
         'processing' => 'Processing',
-        'completed' => 'Completed',
         'cancelled' => 'Cancelled',
     ],
 ];
