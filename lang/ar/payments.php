@@ -6,6 +6,7 @@ return [
     'methods' => [
         'credit_card' => 'Credit Card',
         'paypal' => 'PayPal',
+        'stripe' => 'Stripe',
     ],
     'status' => [
         'pending' => 'Pending',

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PaymentMethod;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PaymentRequest extends FormRequest
 {
@@ -14,7 +16,7 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => ['required', 'string', 'in:credit_card,paypal'],
+            'payment_method' => ['required', 'string', Rule::in(PaymentMethod::cases())],
             'metadata' => ['sometimes', 'array'],
         ];
     }
