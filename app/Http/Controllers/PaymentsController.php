@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\DTOs\PaymentData;
 use App\Http\Resources\{PaymentResource, PaginationResource};
 use App\Models\{Order, Payment};
-use App\Http\Requests\{PaymentRequest, ListPaymentsRequest};
+use App\Http\Requests\{PaymentRequest, ListPaymentsRequest, ShowPaymentRequest, OrderPaymentsRequest};
 use App\Services\PaymentService;
 use Illuminate\Http\{JsonResponse, Response};
 use Illuminate\Support\Facades\DB;
@@ -70,27 +70,13 @@ class PaymentsController extends Controller
         ]);
     }
 
-    public function show(Payment $payment): JsonResponse
+    public function show(Payment $payment, ShowPaymentRequest $request): JsonResponse
     {
-        if ($payment->user_id !== auth()->id()) {
-            return response()->json([
-                'error' => 'Access denied',
-                'message' => 'You can only view your own payments',
-            ], Response::HTTP_FORBIDDEN);
-        }
-
         return response()->json(new PaymentResource($payment));
     }
 
-    public function orderPayments(Order $order, ListPaymentsRequest $request): JsonResponse
+    public function orderPayments(Order $order, OrderPaymentsRequest $request): JsonResponse
     {
-        if ($order->user_id !== auth()->id()) {
-            return response()->json([
-                'error' => 'Access denied',
-                'message' => 'You can only view payments for your own orders',
-            ], Response::HTTP_FORBIDDEN);
-        }
-
         $payments = Payment::search([
             'order_id' => $order->id,
             ...$request->validated(),

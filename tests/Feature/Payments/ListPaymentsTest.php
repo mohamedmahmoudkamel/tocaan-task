@@ -110,11 +110,7 @@ class ListPaymentsTest extends TestCase
             'Authorization' => 'Bearer ' . $this->token,
         ])->getJson("/api/payments/{$payment->id}");
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN)
-            ->assertJson([
-                'error' => 'Access denied',
-                'message' => 'You can only view your own payments',
-            ]);
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     public function test_unauthenticated_user_cannot_access_payments(): void

@@ -78,11 +78,7 @@ class ListOrdersTest extends TestCase
             'Authorization' => 'Bearer ' . $this->token,
         ])->getJson("/api/orders/{$otherOrder->id}");
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN)
-            ->assertJson([
-                'error' => 'Access denied',
-                'message' => 'You can only view your own orders',
-            ]);
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     public function test_unauthenticated_user_cannot_access_orders(): void
