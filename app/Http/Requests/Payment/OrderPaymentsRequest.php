@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Payment;
 
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;

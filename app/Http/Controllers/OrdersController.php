@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\DTOs\OrderUpdateData;
 use App\Enums\OrderStatus;
 use App\Http\Resources\{OrderResource, PaginationResource};
 use App\Models\{Order, OrderItem};
-use App\Http\Requests\{OrderRequest, ListOrdersRequest, DeleteOrderRequest, ShowOrderRequest};
+use App\Http\Requests\Order\{OrderRequest, ListOrdersRequest, DeleteOrderRequest, ShowOrderRequest, UpdateOrderRequest};
 use App\Services\OrderService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\{JsonResponse, Response};
@@ -81,6 +82,33 @@ class OrdersController extends Controller
         $order->load('items');
 
         return response()->json(new OrderResource($order));
+    }
+
+    public function update(Order $order, UpdateOrderRequest $request): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $updateData = OrderUpdateData::fromArray($request->validated());
+            $result = $this->orderService->updateOrder($order, $updateData);
+
+            DB::commit();
+
+            return response()->json(new OrderResource($result['order']));
+
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            logger()->error('Order update failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'error' => 'Order update failed',
+                'message' => $e->getMessage(),
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function destroy(Order $order, DeleteOrderRequest $request): JsonResponse

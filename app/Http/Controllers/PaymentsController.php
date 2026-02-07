@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\DTOs\PaymentData;
 use App\Http\Resources\{PaymentResource, PaginationResource};
 use App\Models\{Order, Payment};
-use App\Http\Requests\{PaymentRequest, ListPaymentsRequest, ShowPaymentRequest, OrderPaymentsRequest};
+use App\Http\Requests\Payment\{PaymentRequest, ListPaymentsRequest, ShowPaymentRequest, OrderPaymentsRequest};
 use App\Services\PaymentService;
 use Illuminate\Http\{JsonResponse, Response};
 use Illuminate\Support\Facades\DB;

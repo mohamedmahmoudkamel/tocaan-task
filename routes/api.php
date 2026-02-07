@@ -22,6 +22,7 @@ Route::middleware(['jwt.auth', 'throttle:60,1'])->group(function () {
     Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
     Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrdersController::class, 'show'])->name('orders.show');
+    Route::put('/orders/{order}', [OrdersController::class, 'update'])->name('orders.update');
     Route::delete('/orders/{order}', [OrdersController::class, 'destroy'])->name('orders.destroy');
     Route::post('/orders/{order}/payments', [PaymentsController::class, 'store'])->name('payments.store');
     Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
