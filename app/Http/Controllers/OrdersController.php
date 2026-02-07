@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Enums\OrderStatus;
+use App\Http\Resources\{OrderResource, PaginationResource};
 use App\Models\{Order, OrderItem};
+use App\Http\Requests\{OrderRequest, ListOrdersRequest};
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\OrderRequest;
 use Illuminate\Http\{JsonResponse, Response};
 
 class OrdersController extends Controller
@@ -53,5 +54,33 @@ class OrdersController extends Controller
                 'message' => $e->getMessage(),
             ], Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    public function index(ListOrdersRequest $request): JsonResponse
+    {
+        $orders = Order::search([
+            'user_id' => auth()->id(),
+            ...$request->validated(),
+        ])
+            ->paginate($request->get('per_page', 15));
+
+        return response()->json([
+            'data' => OrderResource::collection($orders->items()),
+            'pagination' => new PaginationResource($orders),
+        ]);
+    }
+
+    public function show(Order $order): JsonResponse
+    {
+        if ($order->user_id !== auth()->id()) {
+            return response()->json([
+                'error' => 'Access denied',
+                'message' => 'You can only view your own orders',
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        $order->load('items');
+
+        return response()->json(new OrderResource($order));
     }
 }
