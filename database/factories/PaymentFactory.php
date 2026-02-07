@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\{PaymentStatus, PaymentMethod};
-use App\Models\{Payment, Order};
+use App\Models\{Payment, Order, User};
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentFactory extends Factory
@@ -13,6 +13,7 @@ class PaymentFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::factory(),
             'order_id' => Order::factory(),
             'payment_method' => $this->faker->randomElement(PaymentMethod::cases())->value,
             'status' => $this->faker->randomElement(PaymentStatus::cases())->value,

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a086c71ce6127e82c0765f4bf9a45fd9",
+    "content-hash": "795b12541bf2f95543f141d7fe91873f",
     "packages": [
         {
             "name": "brick/math",
@@ -2156,6 +2156,42 @@
                 }
             ],
             "time": "2026-01-15T06:54:53+00:00"
+        },
+        {
+            "name": "mkamel/searchable",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mohamedmahmoudkamel/Searchable.git",
+                "reference": "62c53515a896bfff0dd2a5d1fc3df4dd10f32f58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mohamedmahmoudkamel/Searchable/zipball/62c53515a896bfff0dd2a5d1fc3df4dd10f32f58",
+                "reference": "62c53515a896bfff0dd2a5d1fc3df4dd10f32f58",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MKamel\\Searchable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohamed Mahmoud Kamel",
+                    "email": "mmkln16@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/mohamedmahmoudkamel/Searchable/issues",
+                "source": "https://github.com/mohamedmahmoudkamel/Searchable/tree/v0.2.0"
+            },
+            "time": "2020-10-04T10:39:58+00:00"
         },
         {
             "name": "monolog/monolog",

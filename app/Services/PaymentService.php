@@ -20,6 +20,7 @@ class PaymentService
         $result = $gateway->process($paymentData);
 
         return Payment::create([
+            'user_id' => $paymentData->order->user_id,
             'order_id' => $paymentData->order->id,
             'payment_method' => $paymentData->method,
             'status' => PaymentStatus::from($result['status']),

@@ -21,4 +21,7 @@ Route::post('/auth/login', LoginController::class)->name('auth.login');
 Route::middleware(['jwt.auth', 'throttle:60,1'])->group(function () {
     Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
     Route::post('/orders/{order}/payments', [PaymentsController::class, 'store'])->name('payments.store');
+    Route::get('/payments', [PaymentsController::class, 'index'])->name('payments.index');
+    Route::get('/payments/{payment}', [PaymentsController::class, 'show'])->name('payments.show');
+    Route::get('/orders/{order}/payments', [PaymentsController::class, 'orderPayments'])->name('payments.order');
 });
