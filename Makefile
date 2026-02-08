@@ -2,6 +2,10 @@
 build:
 	docker compose -f docker-compose.development.yml build --pull
 
+copy-env:
+	@cp .env.example .env
+	@cp .env.testing.example .env.testing
+
 up:
 	docker compose -f docker-compose.development.yml up -d
 
@@ -21,7 +25,7 @@ migrate:
 	docker compose -f docker-compose.development.yml exec backend php artisan migrate $(filter-out $@,$(MAKECMDGOALS))
 
 composer-install:
-	docker compose -f docker-compose.production.yml exec backend composer install --no-interaction --prefer-dist --optimize-autoloader
+	docker compose -f docker-compose.development.yml exec backend composer install --no-interaction --prefer-dist --optimize-autoloader
 
 create-migration:
 	docker compose -f docker-compose.development.yml exec backend php artisan make:migration $(filter-out $@,$(MAKECMDGOALS))
